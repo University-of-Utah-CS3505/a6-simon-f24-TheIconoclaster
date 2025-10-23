@@ -9,12 +9,15 @@ class SimonModel : public QObject
 {
     Q_OBJECT
 private:
-    enum Colors { RED, BLUE };
-    int currentScore;
-    bool playersTurn;
+    enum Colors { RED = 0, BLUE = 1 };
+    int currentScore = 0;
+    bool playersTurn = false;
     //TODO: int highScore;
-    std::vector<Colors> sequence;
-    std::queue<Colors> currentTurn;
+    std::vector<Colors> sequence;       // Full sequence of colors
+    std::queue<Colors> currentTurn;     // Remaining flashes
+    int playerIndex = 0;                // position during turn
+
+
     float speedFactor;
     int progress;
     QTimer timer;
@@ -29,6 +32,7 @@ public slots:
     void startGame();
     void nextTurn();
     void endGame();
+    void playerPressed(int colorIndex);
 };
 
 #endif // SIMONMODEL_H
