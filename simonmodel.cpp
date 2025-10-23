@@ -11,4 +11,10 @@ SimonModel::SimonModel(QObject *parent)
 }
 
 void SimonModel::startGame() {}
-// comment
+// reset model
+
+void SimonModel::nextTurn(){}
+
+void SimonModel::endGame(){}
+
+void SimonModel::playerPressed(int colorIndex){}
