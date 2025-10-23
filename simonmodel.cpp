@@ -7,13 +7,8 @@ SimonModel::SimonModel(QObject *parent)
     playersTurn = false;
     speedFactor = 1;
     timer.setInterval(1000);
-    connect(&timer, &QTimer::timeout, this, &SimonModel:: nextTurn);
-
+    connect(&timer, &QTimer::timeout, this, &SimonModel::nextTurn);
 }
 
-void SimonModel::startGame(){
-
-
-
-}
-
+void SimonModel::startGame() {}
+// comment

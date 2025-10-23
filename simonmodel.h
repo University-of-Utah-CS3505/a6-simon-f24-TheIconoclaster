@@ -2,14 +2,14 @@
 #define SIMONMODEL_H
 
 #include <QObject>
-#include <queue>
 #include <QTimer>
+#include <queue>
 
 class SimonModel : public QObject
 {
     Q_OBJECT
 private:
-    enum Colors {RED, BLUE};
+    enum Colors { RED, BLUE };
     int currentScore;
     bool playersTurn;
     //TODO: int highScore;
@@ -29,7 +29,6 @@ public slots:
     void startGame();
     void nextTurn();
     void endGame();
-
 };
 
 #endif // SIMONMODEL_H
