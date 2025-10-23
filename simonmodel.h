@@ -10,8 +10,8 @@ class SimonModel : public QObject
     Q_OBJECT
 private:
     enum Colors { RED = 0, BLUE = 1 };
-    int currentScore = 0;
-    bool playersTurn = false;
+    int currentScore;
+    bool playersTurn;
     //TODO: int highScore;
     std::vector<Colors> sequence;       // Full sequence of colors
     std::queue<Colors> currentTurn;     // Remaining flashes
