@@ -1,28 +1,14 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
-#include "simonmodel.h"
+#include "mainwindow.h"
 
+#include <QApplication>
+#include <QLocale>
+#include <QTranslator>
 
-#include <QMainWindow>
-
-QT_BEGIN_NAMESPACE
-namespace Ui {
-class MainWindow;
-}
-QT_END_NAMESPACE
-
-class MainWindow : public QMainWindow
+int main(int argc, char *argv[])
 {
-    Q_OBJECT
+    QApplication a(argc, argv);
 
-public:
-    MainWindow(SimonModel& model, QWidget *parent = nullptr);
-    ~MainWindow();
-
-
-    // To do - add signals when user presses start and what was pressed
-
-private:
-    Ui::MainWindow *ui;
-};
-#endif // MAINWINDOW_H
+    MainWindow w;
+    w.show();
+    return a.exec();
+}
