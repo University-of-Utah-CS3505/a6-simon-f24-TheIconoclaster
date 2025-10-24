@@ -11,8 +11,6 @@ SimonModel::SimonModel(QObject *parent)
     , playersTurn(false)
     , gameActive(false)
 {
-    // Initialize random seed
-
     // Connect timer signals
     connect(&flashTimer, &QTimer::timeout, this, &SimonModel::processNextFlash);
     connect(&playerTurnTimer, &QTimer::timeout, this, &SimonModel::startPlayerTurn);
