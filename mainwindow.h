@@ -1,5 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
+#include "simonmodel.h"
+
 
 #include <QMainWindow>
 
@@ -14,8 +16,11 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    MainWindow(SimonModel& model, QWidget *parent = nullptr);
     ~MainWindow();
+
+
+    // To do - add signals when user presses start and what was pressed
 
 private:
     Ui::MainWindow *ui;
