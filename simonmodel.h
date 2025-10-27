@@ -35,9 +35,9 @@ private slots:
     void startPlayerTurn();
 
 private:
-    int currentScore;
+    int currentScore;                   // For creative addition
     bool playersTurn;
-    int highScore;
+    int highScore;                      // For creative addition
     bool gameActive;
     std::vector<Colors> sequence;       // Full sequence of colors
     std::queue<Colors> flashQueue;     // Remaining flashes

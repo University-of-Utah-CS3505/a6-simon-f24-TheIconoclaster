@@ -9,6 +9,7 @@ MainWindow::MainWindow(SimonModel& model, QWidget *parent)
     , model(model)
 {
     ui->setupUi(this);
+    ui->HighScore->display(model.getHighScore());
     ui->StartButton->setEnabled(true);
     ui->RedButton->setEnabled(false);
     ui->BlueButton->setEnabled(false);
@@ -41,6 +42,9 @@ MainWindow::MainWindow(SimonModel& model, QWidget *parent)
 
     connect(&model, &SimonModel::progressUpdated,
             ui->progressBar, &QProgressBar::setValue);
+
+    connect(&model, &SimonModel::highScoreChanged,
+            this, [this](int hs){ ui->HighScore->display(hs); });
 
 }
 
