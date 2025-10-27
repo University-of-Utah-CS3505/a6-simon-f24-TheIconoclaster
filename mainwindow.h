@@ -16,13 +16,18 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(SimonModel& model, QWidget *parent = nullptr);
+    explicit MainWindow(SimonModel& model, QWidget *parent = nullptr);
     ~MainWindow();
 
-
-    // To do - add signals when user presses start and what was pressed
+private slots:
+    void onGameStarted();
+    void onGameEnded(int score);
+    void onColorToFlash(int colorIndex);
+    void onTurnStarted(int sequenceLength);
 
 private:
     Ui::MainWindow *ui;
+    SimonModel& model;
+
 };
 #endif // MAINWINDOW_H
