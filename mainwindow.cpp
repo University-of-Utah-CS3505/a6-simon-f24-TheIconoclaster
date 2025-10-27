@@ -71,6 +71,7 @@ void MainWindow::onColorToFlash(int colorIndex)
     // Flash the button briefly
     QPushButton* button = nullptr;
     QString normalStyle, flashStyle;
+    ui->StatusLabel->setText("Watch the pattern:");
 
     if (colorIndex == 0) { // Red button
         button = ui->RedButton;

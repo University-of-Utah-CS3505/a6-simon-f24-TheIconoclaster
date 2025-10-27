@@ -56,7 +56,6 @@ private:
     void resetGameState();
 
     static const int INITIAL_FLASH_DELAY = 1000;  // milliseconds
-    static const int MIN_FLASH_DELAY = 300;      // minimum speed
     static const int SPEED_DECREMENT = 50;       // how much faster each turn
 
 };

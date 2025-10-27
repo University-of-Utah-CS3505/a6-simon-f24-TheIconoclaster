@@ -137,7 +137,7 @@ void SimonModel::flashSequence()
     }
 
     // Calculate flash speed (gets faster as score increases)
-    int flashDelay = max(INITIAL_FLASH_DELAY - (currentScore * SPEED_DECREMENT), MIN_FLASH_DELAY);
+    int flashDelay = max(INITIAL_FLASH_DELAY - (currentScore * SPEED_DECREMENT), 300);  // 300 indicates our minimum flash speed
     flashTimer.start(flashDelay);
 
     // Process first flash immediately
