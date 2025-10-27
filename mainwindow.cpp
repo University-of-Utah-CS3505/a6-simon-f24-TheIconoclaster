@@ -2,12 +2,19 @@
 #include "ui_mainwindow.h"
 #include "simonmodel.h"
 
+/*
+ * Main Window
+ * The view owns widgets and visuals. In this class we show status text, progress,
+ * and flashes of the buttons. Another main function is to forward user input (Start/
+ * Red/Blue) to the model using slots and signals
+ */
 
 MainWindow::MainWindow(SimonModel& model, QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
     , model(model)
 {
+    // Initial UI state
     ui->setupUi(this);
     ui->HighScore->display(model.getHighScore());
     ui->StartButton->setEnabled(true);
@@ -53,6 +60,10 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+/*
+ * When the model determines a new game has started, the UI disables the buttons
+ * and resets.
+ */
 void MainWindow::onGameStarted()
 {
     ui->StartButton->setEnabled(false);
@@ -62,6 +73,10 @@ void MainWindow::onGameStarted()
     ui->StatusLabel->setText("Watch the pattern:");
 }
 
+/*
+ * Whens a game ends, enable the Start button but disable the colors,
+ * and show a message
+ */
 void MainWindow::onGameEnded(int score)
 {
     ui->StartButton->setEnabled(true);
@@ -70,6 +85,10 @@ void MainWindow::onGameEnded(int score)
     ui->StatusLabel->setText(QString("Game Over! Score: %1 - Push to Start").arg(score));
 }
 
+/*
+ * When the model requests to flash a specific color, the UI temporarily
+ * sets the button to a brighter style, then reverts after 300 ms.
+ */
 void MainWindow::onColorToFlash(int colorIndex)
 {
     // Flash the button briefly
@@ -98,6 +117,10 @@ void MainWindow::onColorToFlash(int colorIndex)
     }
 }
 
+/*
+ * When the model determine's it is the player's turn, the UI enables the
+ * buttons, resets progress so far, and sets neutral styles.
+ */
 void MainWindow::onTurnStarted(int sequenceLength)
 {
     ui->RedButton->setEnabled(true);

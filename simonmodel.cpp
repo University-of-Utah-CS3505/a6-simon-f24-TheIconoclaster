@@ -4,6 +4,13 @@
 #include <algorithm>
 using namespace std;
 
+/*
+ * Simon Model
+ * Model in the MV design. This class owns game and state logic:
+ * Here we generate and store the Simon sequence, Drive coputer playback
+ * timing using QTimers, and validate player input to update score.
+ */
+
 SimonModel::SimonModel(QObject *parent)
     : QObject(parent)
     , currentScore(0)
@@ -16,6 +23,9 @@ SimonModel::SimonModel(QObject *parent)
     connect(&playerTurnTimer, &QTimer::timeout, this, &SimonModel::startPlayerTurn);
 }
 
+/*
+ * Begin a new game if one is not active
+ */
 void SimonModel::startGame()
 {
     //Precheck the game is not already active
@@ -37,6 +47,10 @@ void SimonModel::startGame()
     QTimer::singleShot(1000, this, &SimonModel::flashSequence);
 }
 
+/*
+ * Handle a player click. Only validate during the player's turn.
+ * Compare their input against expected item in the sequence
+ */
 void SimonModel::playerPressed(int colorIndex)
 {
     if (!playersTurn || !gameActive || colorIndex < 0 || colorIndex > 1) {
@@ -48,7 +62,7 @@ void SimonModel::playerPressed(int colorIndex)
 
     // Check if the pressed color matches the sequence
     if (pressedColor == expectedColor) {
-        playerInputIndex++;
+        playerInputIndex++;     // Correct input -> advance progress
         emit progressUpdated(static_cast<int>((playerInputIndex * 100) / sequence.size()));
 
         // Check if player completed the sequence
@@ -62,6 +76,7 @@ void SimonModel::playerPressed(int colorIndex)
                 emit highScoreChanged(highScore);
             }
 
+            // Prepare for next round
             playersTurn = false;
             playerInputIndex = 0;
 
@@ -69,11 +84,16 @@ void SimonModel::playerPressed(int colorIndex)
             QTimer::singleShot(1000, this, &SimonModel::nextTurn);
         }
     } else {
-        // Wrong color pressed
+        // Wrong color pressed -> game over
         endGame();
     }
 }
 
+
+/*
+ * Pop one color from the queue and tell the view to flash it
+ * When the queue is empty, it is then the player's turn
+ */
 void SimonModel::processNextFlash()
 {
     if (flashQueue.empty()) {
@@ -90,6 +110,9 @@ void SimonModel::processNextFlash()
     emit colorToFlash(static_cast<int>(nextColor));
 }
 
+/*
+ * Switch to the player's turn, reset round progress
+ */
 void SimonModel::startPlayerTurn()
 {
     playerTurnTimer.stop();
@@ -99,6 +122,9 @@ void SimonModel::startPlayerTurn()
     emit progressUpdated(0);
 }
 
+/*
+ * Start the next sround: replay the sequence and add new color
+ */
 void SimonModel::nextTurn()
 {
     if (!gameActive) return;
@@ -110,6 +136,9 @@ void SimonModel::nextTurn()
     flashSequence();
 }
 
+/*
+ * Game over: stop timers and report final score
+ */
 void SimonModel::endGame()
 {
     if (!gameActive) return;
@@ -122,12 +151,20 @@ void SimonModel::endGame()
     emit gameEnded(currentScore);
 }
 
+/*
+ * Append one color to the main sequence
+ */
 void SimonModel::addRandomColor()
 {
     Colors newColor = static_cast<Colors>(rand() % 2); // 0 or 1
     sequence.push_back(newColor);
 }
 
+/*
+ * Run the computer's playback using flashTimer. Copy the full sequence
+ * into a queue and pop one item each tick. The delay decreases each round,
+ * but not below 300 ms.
+ */
 void SimonModel::flashSequence()
 {
     // Copy sequence to flash queue
@@ -144,6 +181,9 @@ void SimonModel::flashSequence()
     processNextFlash();
 }
 
+/*
+ * Resets back to new-game state
+ */
 void SimonModel::resetGameState()
 {
     currentScore = 0;

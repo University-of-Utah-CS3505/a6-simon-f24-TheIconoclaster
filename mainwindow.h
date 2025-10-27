@@ -2,8 +2,15 @@
 #define MAINWINDOW_H
 #include "simonmodel.h"
 
-
 #include <QMainWindow>
+
+/*
+ * Main Window
+ * The view owns widgets and visuals. In this class we show status text, progress,
+ * and flashes of the buttons. Another main function is to forward user input (Start/
+ * Red/Blue) to the model using slots and signals
+ */
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -27,7 +34,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    SimonModel& model;
+    SimonModel& model;      // Store this reference for wiring
 
 };
 #endif // MAINWINDOW_H
